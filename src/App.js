@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import ClassList from './ClassComponents/List';
+import HookList from './ReactHooks/List'
 import './App.css';
 
+const items = {
+  itemOne: {
+    id: "itemOne",
+    label: "Item One"
+  }
+}
+
 class App extends Component {
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <div>Simple List App</div>
+        <div className="row">
+          <ClassList title="React Classes">{items}</ClassList>
+          <HookList
+            title="React Hooks"
+            items={items}
+          />
+        </div>
       </div>
     );
   }

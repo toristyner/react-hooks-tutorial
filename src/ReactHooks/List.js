@@ -2,16 +2,10 @@ import React, { useState } from 'react';
 import { Button, ListItem, Title } from '../Shared';
 import { randomInclusiveInt } from '../utils';
 
-
-const HookList = props => {
-  
-  const {
-    title,
-    items
-  } = props;
+const HookList = ({title, items}) => {
 
   const [ listItems, setListItems ] = useState(items);
-  const [ newItemName, setItemName ] = useState("");
+  const [ newItemName, setNewItemName ] = useState("");
 
   const addToList = () => {
     const newItem = {
@@ -19,15 +13,14 @@ const HookList = props => {
       label: newItemName,
       isDone: false
     };
-  
     setListItems({ ...listItems, [newItem.id]: newItem });
-    setItemName("")
+    setNewItemName("")
   }
 
-  const checkItem = (id, isChecked) => {
+  const checkItem = (id) => {
     setListItems({
       ...listItems,
-      [id]: {...listItems[id], isDone: isChecked }
+      [id]: {...listItems[id], isDone: !listItems[id].isDone }
     })
   }
 
@@ -41,8 +34,9 @@ const HookList = props => {
             return (
               <ListItem
                 key={itemKey}
+                id={item.id}
                 checkItem={checkItem}
-                {...item}
+                isDone={!!item.isDone}
               >{item.label}</ListItem>
             )
           })
@@ -53,10 +47,13 @@ const HookList = props => {
           type="text"
           className="text-input"
           placeholder="Add a list item..."
-          onChange={({target}) => setItemName(target.value)}
+          onChange={({target}) => setNewItemName(target.value)}
           value={newItemName}
         />
-        <Button onClick={addToList}>Add</Button>
+        <Button
+          onClick={addToList}
+          disabled={!newItemName}
+        >Add</Button>
       </div>
     </div>
   );

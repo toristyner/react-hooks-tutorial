@@ -11,6 +11,8 @@ class List extends Component {
       newItemName: ""
     }
 
+    this.addToList = this.addToList.bind(this);
+    this.checkItem = this.checkItem.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
   }
 
@@ -18,7 +20,7 @@ class List extends Component {
     this.setState({ items: this.props.items || this.props.children });
   }
 
-  addToList = () => {
+  addToList() {
     const id = `${this.state.newItemName}-${randomInclusiveInt()}`;
     this.setState({
       items: {
@@ -34,16 +36,19 @@ class List extends Component {
     this.setState({ newItemName: "" })
   }
 
-  checkItem = ({id, isChecked}) => {
+  checkItem (id) {
     this.setState({
-      [id]: {
-        ...this.state.items[id],
-        isDone: isChecked
+      items: {
+        ...this.state.items,
+        [id]: {
+          ...this.state.items[id],
+          isDone: !this.state.items[id].isDone
+        }
       }
     });
   }
 
-  handleTextChange = ({ target }) => {
+  handleTextChange({ target }) {
     this.setState({newItemName: target.value});
   }
 
@@ -58,8 +63,9 @@ class List extends Component {
               return (
                 <ListItem
                   key={item.id}
+                  id={item.id}
                   checkItem={this.checkItem}
-                  {...item}
+                  isDone={item.isDone}
                 >{item.label}</ListItem>
               )
             })
@@ -73,7 +79,10 @@ class List extends Component {
             value={this.state.newItemName}
             onChange={this.handleTextChange}
           />
-          <Button onClick={this.addToList}>Add</Button>
+          <Button
+            onClick={this.addToList}
+            disabled={!this.state.newItemName}
+          >Add</Button>
         </div>
       </div>
     );

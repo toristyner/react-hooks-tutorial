@@ -10,6 +10,6 @@ const ListItem = props => (
     />
     <div className="list-item">{props.children}</div> 
   </div> 
-);
+)
 
 export default ListItem;

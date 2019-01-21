@@ -4,9 +4,11 @@ const CheckBox = props => (
   <input
     type='checkbox'
     className='checkbox'
-    defaultChecked={props.checked}
-    onChange={({ target }) => props.onCheck({ id: props.id, isChecked: target.checked })}
+    checked={props.checked}
+    onChange={() => {
+      props.onCheck(props.id, props.checked)
+    }}
   />
-)
+);
 
 export default CheckBox;

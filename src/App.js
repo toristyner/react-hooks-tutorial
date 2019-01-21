@@ -6,7 +6,8 @@ import './App.css';
 const items = {
   itemOne: {
     id: "itemOne",
-    label: "Item One"
+    label: "Item One",
+    isDone: true
   }
 }
 
